@@ -22,14 +22,14 @@ router.post("/register", async (request, response) => {
     if (error) return response.status(400).json({ error: error.details[0].message });
 
     // Body deconstruction
-    const { email, username, password, image } = request.body;
+    const { email, userName, password, image } = request.body;
 
     // Check if the email has already been used
     const emailExists = await User.findOne({ email });
     if (emailExists) return response.status(400).json({ error: "Email already taken." });
 
-    // Check if the username has already been used
-    const userExists = await User.findOne({ username });
+    // Check if the userName has already been used
+    const userExists = await User.findOne({ userName });
     if (userExists) return response.status(400).json({ error: "Username not available." });
 
     // Hash the password
@@ -38,7 +38,7 @@ router.post("/register", async (request, response) => {
 
     // Create User
     const user = new User({
-        username,
+        userName,
         email,
         password: hashedPassword,
         image,
@@ -80,10 +80,11 @@ router.post("/login", async (request, response) => {
     const token = webToken.sign({ _id: user._id }, process.env.TOKEN_SECRET);
     response.header("token", token).json({
         token,
-        username: user.username,
+        userName: user.userName,
         id: user._id,
         image: user.image,
         settings: user.settings,
+        homeName: user.homeName,
     });
 });
 

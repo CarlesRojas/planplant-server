@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
-    username: {
+    userName: {
         type: String,
         required: true,
         min: 3,
@@ -25,10 +25,10 @@ const userSchema = new mongoose.Schema({
         min: 6,
         max: 1024,
     },
-    roomID: {
+    homeName: {
         type: String,
-        min: 2,
-        max: 16,
+        min: 3,
+        max: 12,
     },
     date: {
         type: Date,
